@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mongo.smart_study.mapper.UserMapper">
+    <select id="getCMSUser" resultType="CMSUser">
+        select * from cms_user
+    </select>
+
+    <select id="getUserById" resultType="CMSUser">
+        select * from cms_user where id = #{id}
+    </select>
+
+    <insert id="addUser" parameterType="CMSUser">
+        insert into cms_user (id,username,password) values (#{id},#{username},#{password})
+    </insert>
+
+    <update id="updateUser" parameterType="CMSUser">
+        update cms_user set username=#{username},password=#{password} where id=#{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from cms_user where id = #{id}
+    </delete>
+</mapper>
