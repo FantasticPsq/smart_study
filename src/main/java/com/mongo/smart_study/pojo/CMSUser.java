@@ -6,6 +6,8 @@ import com.gitee.sunchenbin.mybatis.actable.command.BaseModel;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
 import org.joda.time.DateTime;
 
+import java.util.Date;
+
 @Table(name = "cms_user")
 public class CMSUser extends BaseModel {
     private final DateTime now = DateTime.now();
@@ -20,19 +22,17 @@ public class CMSUser extends BaseModel {
     @Column(name = "email", type = MySqlTypeConstant.VARCHAR, length = 50)
     private String email;
     @Column(name = "join_time", type = MySqlTypeConstant.DATETIME)
-    private DateTime joinTime;
+    private Date joinTime;
 
-    public CMSUser() {
-    }
-
-    public CMSUser(String username, String password, String email, String phoneNumber) {
+    public CMSUser(String username, String password, String email, String phoneNumber,Date joinTime) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.joinTime = joinTime;
     }
 
-    public DateTime getJoinTime() {
+    public Date getJoinTime() {
         return joinTime;
     }
 
@@ -64,7 +64,7 @@ public class CMSUser extends BaseModel {
         return password;
     }
 
-    public void setJoinTime(DateTime joinTime) {
+    public void setJoinTime(Date joinTime) {
         this.joinTime = joinTime;
     }
 
