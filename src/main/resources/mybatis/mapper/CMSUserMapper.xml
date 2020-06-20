@@ -7,19 +7,25 @@
         select * from cms_user
     </select>
 
-    <select id="getUserById" resultType="CMSUser">
+    <select id="getCMSUserById" resultType="CMSUser">
         select * from cms_user where id = #{id}
     </select>
 
-    <insert id="addUser" parameterType="CMSUser">
+    <select id="findCMSUserByName" resultType="CMSUser">
+        select * from cms_user where username = #{username}
+    </select>
+
+    <insert id="addCMSUser" parameterType="CMSUser">
         insert into cms_user (username,password,email,phone_number,join_time) values (#{username},#{password},#{email},#{phoneNumber},#{joinTime})
     </insert>
 
-    <update id="updateUser" parameterType="CMSUser">
+    <update id="updateCMSUser" parameterType="CMSUser">
         update cms_user set username=#{username},password=#{password} where id=#{id}
     </update>
 
-    <delete id="deleteUser" parameterType="int">
+    <delete id="deleteCMSUser" parameterType="int">
         delete from cms_user where id = #{id}
     </delete>
+
+
 </mapper>

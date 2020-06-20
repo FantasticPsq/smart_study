@@ -12,8 +12,16 @@ import java.util.List;
 @Repository
 public interface CMSUserMapper {
     List<CMSUser> getCMSUser();
-    User getUserById(int id);
-    int addUser(CMSUser user);
-    int updateUser(CMSUser user);
-    int deleteUser(int id);
+
+    User getCMSUserById(int id);
+
+    int addCMSUser(CMSUser user);
+
+    int updateCMSUser(CMSUser user);
+
+    int deleteCMSUser(int id);
+
+    CMSUser findCMSUserByName(String username);
+
+    boolean existsByName(String username);
 }

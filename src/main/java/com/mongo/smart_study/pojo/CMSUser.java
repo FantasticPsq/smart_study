@@ -4,13 +4,13 @@ import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Table;
 import com.gitee.sunchenbin.mybatis.actable.command.BaseModel;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
-import org.joda.time.DateTime;
+import com.mongo.smart_study.mapper.CMSRoleMapper;
 
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "cms_user")
 public class CMSUser extends BaseModel {
-    private final DateTime now = DateTime.now();
     @Column(name = "id", type = MySqlTypeConstant.BIGINT, isKey = true, isAutoIncrement = true)
     private long id;
     @Column(name = "username", type = MySqlTypeConstant.VARCHAR, length = 50)
@@ -23,13 +23,16 @@ public class CMSUser extends BaseModel {
     private String email;
     @Column(name = "join_time", type = MySqlTypeConstant.DATETIME)
     private Date joinTime;
+    private List<Role> roles;
+    //必须要有无参构造，否则无法getCMSUserList
+    public CMSUser(){}
 
-    public CMSUser(String username, String password, String email, String phoneNumber,Date joinTime) {
+    public CMSUser(String username, String password, String email, String phoneNumber) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.joinTime = joinTime;
+        this.joinTime = new Date();
     }
 
     public Date getJoinTime() {
@@ -52,6 +55,10 @@ public class CMSUser extends BaseModel {
         this.email = email;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -62,6 +69,10 @@ public class CMSUser extends BaseModel {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public void setJoinTime(Date joinTime) {
