@@ -4,8 +4,8 @@ import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Table;
 import com.gitee.sunchenbin.mybatis.actable.command.BaseModel;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
-import com.mongo.smart_study.mapper.CMSRoleMapper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,16 +23,20 @@ public class CMSUser extends BaseModel {
     private String email;
     @Column(name = "join_time", type = MySqlTypeConstant.DATETIME)
     private Date joinTime;
-    private List<Role> roles;
-    //必须要有无参构造，否则无法getCMSUserList
-    public CMSUser(){}
+    @Column(name = "roles", type = MySqlTypeConstant.VARCHAR, length = 50)
+    private String roles;
 
-    public CMSUser(String username, String password, String email, String phoneNumber) {
+    //必须要有无参构造，否则无法getCMSUserList
+    public CMSUser() {
+    }
+
+    public CMSUser(String username, String password, String email, String phoneNumber, String roles) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.joinTime = new Date();
+        this.roles = roles;
     }
 
     public Date getJoinTime() {
@@ -54,10 +58,23 @@ public class CMSUser extends BaseModel {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public List<Role> getRoles() {
+    public String getRoles(){
         return roles;
     }
+
+//    public List<Role> getRoles() {
+//        String[] roles = this.roles.split(",");
+//        List<Role> roleList = new ArrayList<>();
+//        for (String s : roles) {
+//            if (s.equals("admin") || s.equals("Admin")) {
+//                roleList.add(Role.Admin);
+//            }
+//            if (s.equals("CommonUser") || s.equals("common_user")) {
+//                roleList.add(Role.CommonUser);
+//            }
+//        }
+//        return roleList;
+//    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -67,11 +84,11 @@ public class CMSUser extends BaseModel {
         this.username = username;
     }
 
+
     public String getPassword() {
         return password;
     }
-
-    public void setRoles(List<Role> roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
     }
 
@@ -82,4 +99,5 @@ public class CMSUser extends BaseModel {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }

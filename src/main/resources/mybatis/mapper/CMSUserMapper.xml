@@ -16,7 +16,7 @@
     </select>
 
     <insert id="addCMSUser" parameterType="CMSUser">
-        insert into cms_user (username,password,email,phone_number,join_time) values (#{username},#{password},#{email},#{phoneNumber},#{joinTime})
+        insert into cms_user (username,password,email,phone_number,join_time,roles) values (#{username},#{password},#{email},#{phoneNumber},#{joinTime},#{roles})
     </insert>
 
     <update id="updateCMSUser" parameterType="CMSUser">

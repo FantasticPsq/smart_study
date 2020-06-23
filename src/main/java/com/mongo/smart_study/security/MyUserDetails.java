@@ -2,6 +2,7 @@ package com.mongo.smart_study.security;
 
 import com.mongo.smart_study.mapper.CMSUserMapper;
 import com.mongo.smart_study.pojo.CMSUser;
+import com.mongo.smart_study.utils.StringToRoleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,15 +17,22 @@ public class MyUserDetails implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final CMSUser user = userRepository.findCMSUserByName(username);
-
+        CMSUser user = userRepository.findCMSUserByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("User '" + username + "' not found");
         }
+        System.out.println(user);
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println(user.getPhoneNumber());
+        System.out.println(user.getEmail());
+        System.out.println(user.getRoles());
+        System.out.println(StringToRoleUtil.stringToRoleUtil(user.getRoles()));
+        System.out.println(user.getJoinTime());
         return org.springframework.security.core.userdetails.User
                 .withUsername(username)
                 .password(user.getPassword())
-                .authorities(user.getRoles())
+                .authorities(StringToRoleUtil.stringToRoleUtil(user.getRoles()))
                 .accountExpired(false)
                 .accountLocked(false)
                 .credentialsExpired(false)

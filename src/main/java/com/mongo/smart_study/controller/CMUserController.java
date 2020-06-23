@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mongo.smart_study.mapper.CMSUserMapper;
 import com.mongo.smart_study.mapper.UserService;
 import com.mongo.smart_study.pojo.CMSUser;
+import com.mongo.smart_study.pojo.Role;
 import com.mongo.smart_study.utils.RequestJsonUtil;
 import com.mongo.smart_study.utils.RespCode;
 import com.mongo.smart_study.utils.RespEntity;
@@ -19,9 +20,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -61,7 +60,9 @@ public class CMUserController {
             String password = jsonObj.getString("password");
             String phoneNumber = jsonObj.getString("phone_number");
             String email = jsonObj.getString("email");
-            CMSUser cmsUser = new CMSUser(username, password, email, phoneNumber);
+            String roles = jsonObj.getString("roles");
+
+            CMSUser cmsUser = new CMSUser(username, password, email, phoneNumber, roles);
             userService.signup(cmsUser);
             return new RespEntity(RespCode.Success);
         } else {
