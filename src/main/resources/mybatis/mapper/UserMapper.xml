@@ -20,7 +20,6 @@
         insert into user_info (username,password,email,phone_number,join_time,roles) values (#{username},#{password},#{email},#{phoneNumber},#{joinTime},#{roles})
     </insert>
 
-
     <delete id="deleteUserById" parameterType="int">
         delete from user_info where id = #{id}
     </delete>
@@ -28,5 +27,11 @@
     <delete id="deleteUser" parameterType="MyUser">
         delete from user_info where id=#{id}
     </delete>
+    <update id="updateNickNameByName">
+         update user_info set nick_name=#{param2} where username=#{param1}
+    </update>
+    <update id="updateSignatureByName">
+        update user_info set signature=#{param2} where username=#{param1}
+    </update>
 
 </mapper>

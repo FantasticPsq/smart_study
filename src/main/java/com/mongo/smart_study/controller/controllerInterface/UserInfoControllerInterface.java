@@ -7,8 +7,8 @@ import java.io.IOException;
 public interface UserInfoControllerInterface {
     RespEntity login() throws IOException;
     RespEntity register() throws IOException;
-    RespEntity changeUserID();
-    RespEntity changeUserMotto();
+    RespEntity changeUserID() throws IOException;
+    RespEntity changeUserMotto() throws IOException;
     RespEntity changeSchool();
     RespEntity changePhone();
 }

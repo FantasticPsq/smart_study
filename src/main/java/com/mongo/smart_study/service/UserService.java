@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
+    /**用户身份服务层，主要用于登录，登录验证，注册，签发token*/
+
     @Autowired
     private UserMapper userRepository;
 

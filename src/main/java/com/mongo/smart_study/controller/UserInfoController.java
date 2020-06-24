@@ -3,19 +3,18 @@ package com.mongo.smart_study.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mongo.smart_study.controller.controllerInterface.UserInfoControllerInterface;
-import com.mongo.smart_study.pojo.CMSUser;
 import com.mongo.smart_study.pojo.MyUser;
 import com.mongo.smart_study.service.UserService;
+import com.mongo.smart_study.service.infoChangeService;
 import com.mongo.smart_study.utils.RequestJsonUtil;
 import com.mongo.smart_study.utils.RespCode;
 import com.mongo.smart_study.utils.RespEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.mongo.smart_study.utils.GetUserContextUtil;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -30,7 +29,12 @@ public class UserInfoController implements UserInfoControllerInterface {
     @Resource
     private UserService userService;
     @Resource
+    private infoChangeService infoChangeService;
+    @Resource
     private HttpServletRequest httpServletRequest;
+
+    @Resource
+    private GetUserContextUtil getUserContextUtil;
 
     @Override
     @PostMapping("/login")
@@ -62,14 +66,39 @@ public class UserInfoController implements UserInfoControllerInterface {
     }
 
     @Override
-    @PostMapping("/changeUserID")
-    public RespEntity changeUserID() {
-        return null;
+    @PostMapping("/changeNickName")
+    public RespEntity changeUserID() throws IOException {
+      /**
+      更改用户的网名昵称
+       获取username和新更改的nickName
+      **/
+      String username=getUserContextUtil.getCurrentUsername();
+      String body=StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
+      if (StringUtils.hasText(body))
+      {
+          JSONObject jsonObject=JSON.parseObject(body);
+          infoChangeService.changeNickname(username,jsonObject.getString("nickName"));
+          return new RespEntity(RespCode.Success);
+      }
+      else
+          return new RespEntity(RespCode.NotFound);
     }
 
     @Override
-    public RespEntity changeUserMotto() {
-        return null;
+    @RequestMapping("/changeMotto")
+    public RespEntity changeUserMotto() throws IOException {
+        String username=getUserContextUtil.getCurrentUsername();
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            infoChangeService.changeMotto(username,jsonObject.getString("motto"));
+            return new RespEntity(RespCode.Success);
+        }
+        else {
+            return new RespEntity(RespCode.NotFound);
+        }
+
     }
 
     @Override

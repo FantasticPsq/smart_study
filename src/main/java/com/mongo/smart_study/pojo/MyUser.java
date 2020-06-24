@@ -22,6 +22,7 @@ public class MyUser {
     private Date joinTime;
     @Column(name = "roles", type = MySqlTypeConstant.VARCHAR, length = 50)
     private String roles;
+
     @Column(name = "nick_name", type = MySqlTypeConstant.VARCHAR, length = 50)
     private String nickname;
 
