@@ -6,6 +6,7 @@ import com.mongo.smart_study.mapper.CMSUserMapper;
 import com.mongo.smart_study.mapper.UserService;
 import com.mongo.smart_study.pojo.CMSUser;
 import com.mongo.smart_study.pojo.Role;
+import com.mongo.smart_study.security.JwtTokenProvider;
 import com.mongo.smart_study.utils.RequestJsonUtil;
 import com.mongo.smart_study.utils.RespCode;
 import com.mongo.smart_study.utils.RespEntity;
@@ -32,16 +33,19 @@ public class CMUserController {
     private HttpServletRequest httpServletRequest;
     @Resource
     private UserService userService;
+    @Resource
+    private JwtTokenProvider jwtTokenProvider;
 
 
     @RequestMapping("/user_list")
     public List<CMSUser> getUserList() {
-        return cmsUserMapper.getCMSUser();
+        boolean isTokenOk = jwtTokenProvider.validateToken(httpServletRequest.getHeader("Authorization"));
+        if (isTokenOk) {
+            return cmsUserMapper.getCMSUser();
+        }
+        return null;
     }
 
-    //    @PostMapping("/add_user")
-//    public RespEntity addUser() {
-//    }
     @PostMapping("/login")
     public RespEntity login() throws IOException {
         Map<String, String> hashMap = RequestJsonUtil.getRequestJson(httpServletRequest);
@@ -61,7 +65,6 @@ public class CMUserController {
             String phoneNumber = jsonObj.getString("phone_number");
             String email = jsonObj.getString("email");
             String roles = jsonObj.getString("roles");
-
             CMSUser cmsUser = new CMSUser(username, password, email, phoneNumber, roles);
             userService.signup(cmsUser);
             return new RespEntity(RespCode.Success);

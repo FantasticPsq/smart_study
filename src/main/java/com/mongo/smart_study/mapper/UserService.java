@@ -69,7 +69,8 @@ public class UserService {
     }
 
     public CMSUser whoami(HttpServletRequest req) {
-        return userRepository.findCMSUserByName(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
+//        return userRepository.findCMSUserByName(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
+        return null;
     }
 
     public String refresh(String username) {

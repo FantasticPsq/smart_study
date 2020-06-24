@@ -21,12 +21,6 @@ public class MyUserDetails implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User '" + username + "' not found");
         }
-        System.out.println(user);
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println(user.getPhoneNumber());
-        System.out.println(user.getEmail());
-        System.out.println(user.getRoles());
         System.out.println(StringToRoleUtil.stringToRoleUtil(user.getRoles()));
         System.out.println(user.getJoinTime());
         return org.springframework.security.core.userdetails.User
