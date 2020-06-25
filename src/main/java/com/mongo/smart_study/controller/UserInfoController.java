@@ -40,11 +40,13 @@ public class UserInfoController implements UserInfoControllerInterface {
     @Override
     @PostMapping("/login")
     public RespEntity login() throws IOException {
+
         Map<String, String> hashMap = RequestJsonUtil.getRequestJson(httpServletRequest);
         String token = userService.signin(hashMap.get("username"), hashMap.get("password"),hashMap.get("roles"));
         HashMap<String, String> hashMap1 = new HashMap<>();
         hashMap1.put("token", token);
         return new RespEntity(RespCode.Success, hashMap1);
+
     }
 
     @Override
@@ -125,7 +127,6 @@ public class UserInfoController implements UserInfoControllerInterface {
             JSONObject jsonObject=JSON.parseObject(body);
             infoChangeService.changePhone(username,jsonObject.getString("phone"));
             return  new RespEntity(RespCode.Success);
-
         }
         else
             return new RespEntity(RespCode.NotFound);
@@ -160,4 +161,5 @@ public class UserInfoController implements UserInfoControllerInterface {
         return new RespEntity(RespCode.NotFound);
         }
     }
+
 }

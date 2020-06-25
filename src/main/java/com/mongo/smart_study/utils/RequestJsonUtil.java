@@ -47,14 +47,14 @@ public class RequestJsonUtil {
             roles=jsonObj.getString("roles");
             if (wxUserCode != null) {
                 JSONObject codeJson = RequestJsonUtil.requestForWX(wxAppID,wxAPPSecret,wxUserCode);
+                username=codeJson.getString("openid");
                 password=codeJson.getString("openid");
             }
             else
             {
-                //方便测试
+                //方便测试,同时兼容账户密码登录和微信登录
                 password = jsonObj.getString("password");
             }
-
         }
 
         if (username == null)
