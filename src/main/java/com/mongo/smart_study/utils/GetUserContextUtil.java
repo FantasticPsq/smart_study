@@ -23,4 +23,7 @@ public class GetUserContextUtil {
         }
         return String.valueOf(principal);
     }
+
+
+
 }

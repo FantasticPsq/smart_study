@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.mongo.smart_study.exception.CustomException;
 import com.mongo.smart_study.mapper.UserMapper;
-import com.mongo.smart_study.pojo.CMSUser;
+
 import com.mongo.smart_study.pojo.MyUser;
 import com.mongo.smart_study.security.JwtTokenProvider;
 import com.mongo.smart_study.utils.StringToRoleUtil;

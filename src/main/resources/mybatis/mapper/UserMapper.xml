@@ -33,5 +33,15 @@
     <update id="updateSignatureByName">
         update user_info set signature=#{param2} where username=#{param1}
     </update>
+    <update id="updateSchoolByName">
+        update user_info set school=#{param2} where username=#{param1}
+    </update>
+    <update id="updatePhoneByName" >
+        update user_info set phone_number=#{param2} where username=#{param1}
+    </update>
+
+    <update id="updateEmailByName" >
+        update user_info set email=#{param2} where username=#{param1}
+    </update>
 
 </mapper>

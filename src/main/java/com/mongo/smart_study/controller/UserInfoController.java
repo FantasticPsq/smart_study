@@ -24,6 +24,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
+/****为用户基本信息提供服务的Controller*****/
 public class UserInfoController implements UserInfoControllerInterface {
 
     @Resource
@@ -54,8 +55,6 @@ public class UserInfoController implements UserInfoControllerInterface {
             JSONObject jsonObj = JSON.parseObject(body);
             String username = jsonObj.getString("username");
             String password = jsonObj.getString("password");
-//            String phoneNumber = jsonObj.getString("phone_number");
-//            String email = jsonObj.getString("email");
             String roles = jsonObj.getString("roles");
             MyUser newUser = new MyUser(username, password, roles);
             userService.signup(newUser);
@@ -102,12 +101,63 @@ public class UserInfoController implements UserInfoControllerInterface {
     }
 
     @Override
-    public RespEntity changeSchool() {
-        return null;
+    @RequestMapping("/changeSchool")
+    public RespEntity changeSchool() throws IOException {
+        String username=getUserContextUtil.getCurrentUsername();
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            infoChangeService.changeSchool(username,jsonObject.getString("school"));
+            return new RespEntity(RespCode.Success);
+        }
+        else
+           return new RespEntity(RespCode.NotFound);
     }
 
     @Override
-    public RespEntity changePhone() {
-        return null;
+    @RequestMapping("/changePhone")
+    public RespEntity changePhone() throws IOException {
+        String username=getUserContextUtil.getCurrentUsername();
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            infoChangeService.changePhone(username,jsonObject.getString("phone"));
+            return  new RespEntity(RespCode.Success);
+
+        }
+        else
+            return new RespEntity(RespCode.NotFound);
+    }
+
+    @Override
+    @RequestMapping("/changeEmail")
+    public RespEntity changeEmail() throws IOException {
+        String username=getUserContextUtil.getCurrentUsername();
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            infoChangeService.changeEmail(username,jsonObject.getString("email"));
+            return  new RespEntity(RespCode.Success);
+
+        }
+        else
+            return new RespEntity(RespCode.NotFound);
+    }
+
+    @Override
+    @RequestMapping("/getUserAllInfo")
+    public RespEntity getUserAllInfo() {
+        String username=getUserContextUtil.getCurrentUsername();
+        MyUser myUser=infoChangeService.getUserAllInfo(username);
+        if (myUser!=null)
+        {
+            return new RespEntity(RespCode.Success,myUser);
+        }else
+        {
+        return new RespEntity(RespCode.NotFound);
+        }
     }
 }

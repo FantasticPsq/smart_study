@@ -24,5 +24,11 @@ public interface UserMapper {
     int updateNickNameByName(String userName,String nickName);
     /**跟新个性签名*/
     int updateSignatureByName(String userName,String signature);
+    /**更新学校*/
+    int updateSchoolByName(String username,String school);
+    /**更新用户手机号码**/
+    int updatePhoneByName(String username,String phone);
+    /**更新用户的邮箱号码*/
+    int updateEmailByName(String username,String email);
 
 }

@@ -25,7 +25,9 @@ public class MyUser {
 
     @Column(name = "nick_name", type = MySqlTypeConstant.VARCHAR, length = 50)
     private String nickname;
-
+    //课程数
+    @Column(name = "class_num",type = MySqlTypeConstant.INT)
+    private int class_num;
     //个性签名
     @Column(name = "signature", type = MySqlTypeConstant.VARCHAR, length = 250)
     private  String signature;
@@ -35,7 +37,10 @@ public class MyUser {
     //余额
     @Column(name = "balance",type = MySqlTypeConstant.FLOAT)
     private float balance;
-    //积分
+
+    @Column(name = "imageUrl", type = MySqlTypeConstant.VARCHAR,length = 250)
+    private String imageUrl;
+    /**积分*/
     @Column(name = "integral",type = MySqlTypeConstant.INT)
     private int integral;
     @Column(name = "school",type = MySqlTypeConstant.VARCHAR,length = 50)
