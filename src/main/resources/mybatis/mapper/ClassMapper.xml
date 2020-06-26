@@ -12,5 +12,12 @@
     <insert id="addClass">
         insert into class (name, rate, origin, description, video_url, post_url, likes, comments_num, watch_num)values (#{name},#{rate},#{origin}, #{description}, #{video_url}, #{post_url}, #{likes}, #{comments_num}, #{watch_num})
     </insert>
+    <select id="findVideoSrcById" resultType="String">
+        select video_url from class where id=#{id}
+    </select>
+
+    <select id="findAllClassesByType" resultType="Class">
+        select * from class where class_type=#{type}
+    </select>
 
 </mapper>

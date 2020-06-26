@@ -13,6 +13,8 @@ public class Class {
     private String name;
     @Column(name = "rate",type = MySqlTypeConstant.INT)
     private int rate;
+    @Column(name = "class_type",type = MySqlTypeConstant.VARCHAR,length = 50)
+    private String type;
     @Column(name = "origin",type = MySqlTypeConstant.VARCHAR,length = 50)
     private String origin;
     @Column(name = "description",type = MySqlTypeConstant.VARCHAR,length = 250)
@@ -29,7 +31,6 @@ public class Class {
     private int watch_num;
 
     public Class() {
-
     }
 
     public Class(String name, String origin, String description, String video_Url, String post_Url) {
