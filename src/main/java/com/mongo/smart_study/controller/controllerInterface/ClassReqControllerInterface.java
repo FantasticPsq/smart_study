@@ -26,5 +26,7 @@ public interface ClassReqControllerInterface {
     RespEntity getRecommendClasses();
     /***对视频进行评论的接口*/
     RespEntity doComments() throws IOException;
+    /**访问视频图片的接口**/
+
 
 }

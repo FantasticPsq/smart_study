@@ -4,6 +4,8 @@ import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Table;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
 
+import java.util.Date;
+
 @Table(name = "class_comments")
 public class ClassComments {
 
@@ -11,9 +13,51 @@ public class ClassComments {
     @Column(name = "id", type = MySqlTypeConstant.BIGINT, isKey = true, isAutoIncrement = true)
     private int id;
     @Column(name = "class_id",type = MySqlTypeConstant.BIGINT)
-    private int class_id;
+    private long classId;
     @Column(name = "user_id",type = MySqlTypeConstant.BIGINT)
-    private int user_id;
+    private long userId;
     @Column(name="content",type = MySqlTypeConstant.TEXT)
     private String content;
+    @Column(name = "join_time", type = MySqlTypeConstant.DATETIME)
+    private Date joinTime;
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ClassComments() {
+
+    }
+    public ClassComments(long classId, long userId, String content) {
+        this.classId = classId;
+        this.userId = userId;
+        this.content = content;
+        this.joinTime=new Date();
+    }
+
+    public long getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

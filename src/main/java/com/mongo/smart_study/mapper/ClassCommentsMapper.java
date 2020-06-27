@@ -11,5 +11,7 @@ public interface ClassCommentsMapper {
     /**通过评论id获取评论实体*/
     ClassComments getCommentById(int id);
     /***进行评论*/
-    int doComments(long userId,long classId,String contents);
+    int doCommentsByParam(long userId,long classId,String contents);
+    /**进行评论*/
+    int doComments(ClassComments classComments);
 }

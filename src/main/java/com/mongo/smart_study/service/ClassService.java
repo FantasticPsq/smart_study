@@ -45,11 +45,11 @@ public class ClassService {
     }
     public List<Class> findAllSeniorClass()
     {
-        return classRepo.findAllClassesByType(ClassType.junior.toString());
+        return classRepo.findAllClassesByType(ClassType.senior.toString());
     }
     public List<Class> findAllJuniorClasses()
     {
-        return classRepo.findAllClassesByType(ClassType.senior.toString());
+        return classRepo.findAllClassesByType(ClassType.junior.toString());
     }
 
     /***作评论服务层**/
@@ -58,7 +58,8 @@ public class ClassService {
         MyUser myUser=userRepo.findUserByName(username);
         if (myUser!=null)
         {
-            commentsRepo.doComments(myUser.getId(),classId,content);
+            ClassComments classComments=new ClassComments(myUser.getId(),classId,content);
+            commentsRepo.doComments(classComments);
         }
         else {
             //do nothing
@@ -67,6 +68,15 @@ public class ClassService {
     public List<ClassComments> getAllCommentsByClassId(long id)
     {
         return commentsRepo.getClassCommentsById(id);
+    }
+    public String getClassPostSrc(long classID)
+    {
+        String postSrc=classRepo.getClassPostSrcById(classID);
+        if (postSrc==null)
+        {
+            return "";
+        }else
+            return postSrc;
     }
 
 

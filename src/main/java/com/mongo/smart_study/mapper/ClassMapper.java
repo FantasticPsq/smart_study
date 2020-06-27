@@ -17,4 +17,7 @@ public interface ClassMapper {
     /**根据课程种类寻找*/
     List<Class> findAllClassesByType(String type);
 
+    /**根据课程id寻找课程的海报的地址*/
+    String getClassPostSrcById(long id);
+
 }

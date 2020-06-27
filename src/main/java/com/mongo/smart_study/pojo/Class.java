@@ -5,6 +5,8 @@ import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Table;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
 
+import java.util.Date;
+
 @Table(name = "class")
 public class Class {
     @Column(name = "id", type = MySqlTypeConstant.BIGINT, isKey = true, isAutoIncrement = true)
@@ -14,42 +16,55 @@ public class Class {
     @Column(name = "rate",type = MySqlTypeConstant.INT)
     private int rate;
     @Column(name = "class_type",type = MySqlTypeConstant.VARCHAR,length = 50)
-    private String type;
+    private String classType;
     @Column(name = "origin",type = MySqlTypeConstant.VARCHAR,length = 50)
     private String origin;
     @Column(name = "description",type = MySqlTypeConstant.VARCHAR,length = 250)
     private String description;
     @Column(name = "video_url",type = MySqlTypeConstant.VARCHAR,length = 250)
-    private String video_Url;
+    private String videoUrl;
     @Column(name = "post_url",type = MySqlTypeConstant.VARCHAR,length = 250)
-    private String post_Url;
+    private String postUrl;
     @Column(name = "likes",type = MySqlTypeConstant.BIGINT)
-    private int likes_num;
+    private int likesNum;
     @Column(name = "comments_num",type = MySqlTypeConstant.BIGINT)
-    private int comments_num;
+    private int commentsNum;
     @Column(name = "watch_num",type = MySqlTypeConstant.BIGINT)
-    private int watch_num;
+    private int watchNum;
+    @Column(name = "join_time", type = MySqlTypeConstant.DATETIME)
+    private Date joinTime;
+
+    public Date getJoinTime() {
+        return joinTime;
+    }
+
+    public void setJoinTime(Date joinTime) {
+        this.joinTime = joinTime;
+    }
 
     public Class() {
     }
 
-    public Class(String name, String origin, String description, String video_Url, String post_Url) {
+    public Class(String name, String origin, String description, String videoUrl, String postUrl) {
         this.name = name;
         this.origin = origin;
         this.description = description;
-        this.video_Url = video_Url;
-        this.post_Url = post_Url;
+        this.videoUrl = videoUrl;
+        this.postUrl = postUrl;
+        this.joinTime=new Date();
     }
 
-    public Class(String name, String video_Url, String post_Url) {
+    public Class(String name, String videoUrl, String postUrl) {
         this.name = name;
-        this.video_Url = video_Url;
-        this.post_Url = post_Url;
+        this.videoUrl = videoUrl;
+        this.postUrl = postUrl;
+        this.joinTime=new Date();
     }
 
-    public Class(String name, String video_Url) {
+    public Class(String name, String videoUrl) {
         this.name = name;
-        this.video_Url = video_Url;
+        this.videoUrl = videoUrl;
+        this.joinTime=new Date();
     }
 
     public int getId() {
@@ -92,43 +107,50 @@ public class Class {
         this.description = description;
     }
 
-    public String getVideo_Url() {
-        return video_Url;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setVideo_Url(String video_Url) {
-        this.video_Url = video_Url;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
-    public String getPost_Url() {
-        return post_Url;
+    public String getPostUrl() {
+        return postUrl;
     }
 
-    public void setPost_Url(String post_Url) {
-        this.post_Url = post_Url;
+    public void setPostUrl(String postUrl) {
+        this.postUrl = postUrl;
     }
 
-    public int getLikes_num() {
-        return likes_num;
+    public int getLikesNum() {
+        return likesNum;
     }
 
-    public void setLikes_num(int likes_num) {
-        this.likes_num = likes_num;
+    public void setLikesNum(int likesNum) {
+        this.likesNum = likesNum;
     }
 
-    public int getComments_num() {
-        return comments_num;
+    public int getCommentsNum() {
+        return commentsNum;
     }
 
-    public void setComments_num(int comments_num) {
-        this.comments_num = comments_num;
+    public void setCommentsNum(int commentsNum) {
+        this.commentsNum = commentsNum;
     }
 
-    public int getWatch_num() {
-        return watch_num;
+    public int getWatchNum() {
+        return watchNum;
     }
 
-    public void setWatch_num(int watch_num) {
-        this.watch_num = watch_num;
+    public void setWatchNum(int watchNum) {
+        this.watchNum = watchNum;
+    }
+    public String getClassType() {
+        return classType;
+    }
+
+    public void setClassType(String classType) {
+        this.classType = classType;
     }
 }

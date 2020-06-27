@@ -9,7 +9,7 @@
     <select id="getCommentById" resultType="ClassComments">
         select * from class_comments where id=#{id}
     </select>
-    <insert id="doComments">
-        insert into class_comments (class_id, user_id, content) values (#{param2},#{param1},#{param3})
+    <insert id="doComments" parameterType="ClassComments">
+        insert into class_comments (class_id, user_id, content) values (#{classId},#{userId},#{content})
     </insert>
 </mapper>

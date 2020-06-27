@@ -10,7 +10,7 @@
         select * from class where id=#{id}
     </select>
     <insert id="addClass">
-        insert into class (name, rate, origin, description, video_url, post_url, likes, comments_num, watch_num)values (#{name},#{rate},#{origin}, #{description}, #{video_url}, #{post_url}, #{likes}, #{comments_num}, #{watch_num})
+        insert into class (name, rate, origin, description, video_url, post_url, likes, comments_num, watch_num,class_type)values (#{name},#{rate},#{origin}, #{description}, #{video_url}, #{post_url}, #{likes}, #{comments_num}, #{watch_num},#{class_type})
     </insert>
     <select id="findVideoSrcById" resultType="String">
         select video_url from class where id=#{id}
@@ -18,6 +18,9 @@
 
     <select id="findAllClassesByType" resultType="Class">
         select * from class where class_type=#{type}
+    </select>
+    <select id="getClassPostSrcById" resultType="String">
+        select post_url from class where id=#{id}
     </select>
 
 </mapper>

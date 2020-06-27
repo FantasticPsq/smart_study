@@ -27,13 +27,13 @@ public class MyUser {
     private String nickname;
     //课程数
     @Column(name = "class_num",type = MySqlTypeConstant.INT)
-    private int class_num;
+    private Integer classNum;
     //个性签名
     @Column(name = "signature", type = MySqlTypeConstant.VARCHAR, length = 250)
     private  String signature;
     //学习时长
     @Column(name = "study_time",type =MySqlTypeConstant.INT )
-    private int study_time;
+    private Integer studyTime;
     //余额
     @Column(name = "balance",type = MySqlTypeConstant.FLOAT)
     private float balance;
@@ -42,11 +42,11 @@ public class MyUser {
     private String imageUrl;
     /**积分*/
     @Column(name = "integral",type = MySqlTypeConstant.INT)
-    private int integral;
+    private Integer integral;
     @Column(name = "school",type = MySqlTypeConstant.VARCHAR,length = 50)
     private String school;
     @Column(name = "role_id",type = MySqlTypeConstant.INT)
-    private int role_id;
+    private int roleId;
     @Column(name = "union_id",type = MySqlTypeConstant.VARCHAR,length = 50)
     private String union_id;
     public MyUser(){
@@ -82,7 +82,21 @@ public class MyUser {
     public String getNickname() {
         return nickname;
     }
+    public Integer getClassNum() {
+        return classNum;
+    }
 
+    public void setClassNum(Integer classNum) {
+        this.classNum = classNum;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -138,12 +152,12 @@ public class MyUser {
         this.signature = signature;
     }
 
-    public int getStudy_time() {
-        return study_time;
+    public Integer getStudyTime() {
+        return studyTime;
     }
 
-    public void setStudy_time(int study_time) {
-        this.study_time = study_time;
+    public void setStudyTime(Integer studyTime) {
+        this.studyTime = studyTime;
     }
 
     public float getBalance() {
@@ -154,11 +168,11 @@ public class MyUser {
         this.balance = balance;
     }
 
-    public int getIntegral() {
+    public Integer getIntegral() {
         return integral;
     }
 
-    public void setIntegral(int integral) {
+    public void setIntegral(Integer integral) {
         this.integral = integral;
     }
 
@@ -170,12 +184,12 @@ public class MyUser {
         this.school = school;
     }
 
-    public int getRole_id() {
-        return role_id;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getUnion_id() {

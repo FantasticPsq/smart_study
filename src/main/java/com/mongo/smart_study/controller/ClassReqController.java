@@ -11,6 +11,7 @@ import com.mongo.smart_study.utils.NonStaticResourceHttpRequestHandler;
 import com.mongo.smart_study.utils.RespCode;
 import com.mongo.smart_study.utils.RespEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
@@ -18,10 +19,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -51,7 +55,7 @@ public class ClassReqController implements ClassReqControllerInterface {
         if (StringUtils.hasText(body))
         {
             JSONObject jsonObject= JSON.parseObject(body);
-            Class targetClass=classService.getClassInfoById(Integer.parseInt(jsonObject.getString("id")));
+            Class targetClass=classService.getClassInfoById(Integer.parseInt(jsonObject.getString("classID")));
             return new RespEntity(RespCode.Success,targetClass);
         }
         else
@@ -89,6 +93,7 @@ public class ClassReqController implements ClassReqControllerInterface {
     }
 
     @GetMapping("/getPlayResource/{resourceId}")
+    /****视频播放请求接口，video组件的请求地址*/
     public void getPlayResource(@PathVariable("resourceId") Long resourceId,
                                 HttpServletRequest request,
                                 HttpServletResponse response) throws Exception {
@@ -114,7 +119,6 @@ public class ClassReqController implements ClassReqControllerInterface {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         }
-
     }
 
     @Override
@@ -145,6 +149,7 @@ public class ClassReqController implements ClassReqControllerInterface {
 
     @Override
     @RequestMapping("/doComments")
+    /**评论请求接口，将评论存放到数据库中**/
     public RespEntity doComments() throws IOException {
         //需要知道是哪个人，哪个class，评论内容
         String username= getUserContextUtil.getCurrentUsername();
@@ -168,5 +173,12 @@ public class ClassReqController implements ClassReqControllerInterface {
             return new RespEntity(RespCode.NotFound);
     }
 
-
+    /***视频海报请求地址，回传视频的海报*/
+    @RequestMapping(value = "/getClassImage/{classID}",produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getImage(@PathVariable("classID") long classID) throws IOException {
+        FileInputStream inputStream=new FileInputStream(new File(classService.getClassPostSrc(classID)));
+        byte[] bytes = new byte[inputStream.available()];
+        inputStream.read(bytes, 0, inputStream.available());
+        return bytes;
+    }
 }
