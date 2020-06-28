@@ -43,5 +43,8 @@
     <update id="updateEmailByName" >
         update user_info set email=#{param2} where username=#{param1}
     </update>
+    <update id="updateClassNumById">
+        update user_info set class_num=class_num+1 where id=#{id}
+    </update>
 
 </mapper>

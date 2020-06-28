@@ -17,6 +17,7 @@ public interface UserInfoControllerInterface {
     /**获取部分**/
     /**作为我的界面进入请求的获取用户所有相关信息*/
     RespEntity getUserAllInfo();
+    RespEntity getUserCollectedClasses();
 
 
 }

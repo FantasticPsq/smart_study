@@ -28,5 +28,8 @@ public interface ClassReqControllerInterface {
     RespEntity doComments() throws IOException;
     /**访问视频图片的接口**/
 
+    /**收藏课程接口*/
+    RespEntity collectClass() throws IOException;
+
 
 }

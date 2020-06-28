@@ -3,9 +3,11 @@ package com.mongo.smart_study.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mongo.smart_study.controller.controllerInterface.UserInfoControllerInterface;
+import com.mongo.smart_study.pojo.Class;
 import com.mongo.smart_study.pojo.MyUser;
+import com.mongo.smart_study.pojo.UserCollectedClass;
 import com.mongo.smart_study.service.UserService;
-import com.mongo.smart_study.service.infoChangeService;
+import com.mongo.smart_study.service.InfoService;
 import com.mongo.smart_study.utils.RequestJsonUtil;
 import com.mongo.smart_study.utils.RespCode;
 import com.mongo.smart_study.utils.RespEntity;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,7 +33,7 @@ public class UserInfoController implements UserInfoControllerInterface {
     @Resource
     private UserService userService;
     @Resource
-    private infoChangeService infoChangeService;
+    private InfoService infoService;
     @Resource
     private HttpServletRequest httpServletRequest;
 
@@ -78,7 +81,7 @@ public class UserInfoController implements UserInfoControllerInterface {
       if (StringUtils.hasText(body))
       {
           JSONObject jsonObject=JSON.parseObject(body);
-          infoChangeService.changeNickname(username,jsonObject.getString("nickName"));
+          infoService.changeNickname(username,jsonObject.getString("nickName"));
           return new RespEntity(RespCode.Success);
       }
       else
@@ -93,7 +96,7 @@ public class UserInfoController implements UserInfoControllerInterface {
         if (StringUtils.hasText(body))
         {
             JSONObject jsonObject=JSON.parseObject(body);
-            infoChangeService.changeMotto(username,jsonObject.getString("motto"));
+            infoService.changeMotto(username,jsonObject.getString("motto"));
             return new RespEntity(RespCode.Success);
         }
         else {
@@ -110,7 +113,7 @@ public class UserInfoController implements UserInfoControllerInterface {
         if (StringUtils.hasText(body))
         {
             JSONObject jsonObject=JSON.parseObject(body);
-            infoChangeService.changeSchool(username,jsonObject.getString("school"));
+            infoService.changeSchool(username,jsonObject.getString("school"));
             return new RespEntity(RespCode.Success);
         }
         else
@@ -125,7 +128,7 @@ public class UserInfoController implements UserInfoControllerInterface {
         if (StringUtils.hasText(body))
         {
             JSONObject jsonObject=JSON.parseObject(body);
-            infoChangeService.changePhone(username,jsonObject.getString("phone"));
+            infoService.changePhone(username,jsonObject.getString("phone"));
             return  new RespEntity(RespCode.Success);
         }
         else
@@ -140,7 +143,7 @@ public class UserInfoController implements UserInfoControllerInterface {
         if (StringUtils.hasText(body))
         {
             JSONObject jsonObject=JSON.parseObject(body);
-            infoChangeService.changeEmail(username,jsonObject.getString("email"));
+            infoService.changeEmail(username,jsonObject.getString("email"));
             return  new RespEntity(RespCode.Success);
 
         }
@@ -152,7 +155,7 @@ public class UserInfoController implements UserInfoControllerInterface {
     @RequestMapping("/getUserAllInfo")
     public RespEntity getUserAllInfo() {
         String username=getUserContextUtil.getCurrentUsername();
-        MyUser myUser=infoChangeService.getUserAllInfo(username);
+        MyUser myUser= infoService.getUserAllInfo(username);
         if (myUser!=null)
         {
             return new RespEntity(RespCode.Success,myUser);
@@ -162,4 +165,11 @@ public class UserInfoController implements UserInfoControllerInterface {
         }
     }
 
+    @Override
+    @RequestMapping("/getUserCollectedClasses")
+    public RespEntity getUserCollectedClasses() {
+        String username=getUserContextUtil.getCurrentUsername();
+        List<Class> collectedClassList=infoService.getAllUserCollectedClasses(username);
+        return new RespEntity(RespCode.Success,collectedClassList);
+    }
 }

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.mongo.smart_study.controller.controllerInterface.ClassReqControllerInterface;
 import com.mongo.smart_study.pojo.Class;
 import com.mongo.smart_study.pojo.ClassComments;
+import com.mongo.smart_study.pojo.CommentsResp;
 import com.mongo.smart_study.service.ClassService;
 import com.mongo.smart_study.utils.GetUserContextUtil;
 import com.mongo.smart_study.utils.NonStaticResourceHttpRequestHandler;
@@ -73,7 +74,7 @@ public class ClassReqController implements ClassReqControllerInterface {
             JSONObject jsonObject=JSON.parseObject(body);
             try {
                 long classId=Integer.parseInt(jsonObject.getString("classID"));
-                List<ClassComments> commentsList=classService.getAllCommentsByClassId(classId);
+                List<CommentsResp> commentsList=classService.getAllCommentsByClassId(classId);
                 return new RespEntity(RespCode.Success,commentsList);
             }
             catch ( NumberFormatException e)
@@ -147,6 +148,8 @@ public class ClassReqController implements ClassReqControllerInterface {
         return null;
     }
 
+
+
     @Override
     @RequestMapping("/doComments")
     /**评论请求接口，将评论存放到数据库中**/
@@ -171,6 +174,28 @@ public class ClassReqController implements ClassReqControllerInterface {
         }
         else
             return new RespEntity(RespCode.NotFound);
+    }
+    @Override
+    @RequestMapping("/collectClass")
+    /**收藏课程得接口,注意需要判断用户是否收藏课该课程，不能重复收藏*/
+    public RespEntity collectClass() throws IOException {
+        String username= getUserContextUtil.getCurrentUsername();
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            try
+            {
+                long classId=Integer.parseInt(jsonObject.getString("classID"));
+                classService.collectClassService(username,classId);
+                return new RespEntity(RespCode.Success);
+            }catch (NumberFormatException ex)
+            {
+                return  new RespEntity(RespCode.NotFound);
+            }
+
+        }else
+            return  new RespEntity(RespCode.NotFound);
     }
 
     /***视频海报请求地址，回传视频的海报*/

@@ -22,5 +22,12 @@
     <select id="getClassPostSrcById" resultType="String">
         select post_url from class where id=#{id}
     </select>
+    <update id="updateCommentNumById">
+        update class set comments_num=comments_num+1 where id=#{id}
+    </update>
+
+    <update id="updateLikeNumById">
+        update class set likes=likes+1 where id=#{id}
+    </update>
 
 </mapper>

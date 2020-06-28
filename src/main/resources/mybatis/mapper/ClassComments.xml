@@ -10,6 +10,6 @@
         select * from class_comments where id=#{id}
     </select>
     <insert id="doComments" parameterType="ClassComments">
-        insert into class_comments (class_id, user_id, content) values (#{classId},#{userId},#{content})
+        insert into class_comments (class_id, user_id, content,join_time) values (#{classId},#{userId},#{content},#{joinTime})
     </insert>
 </mapper>

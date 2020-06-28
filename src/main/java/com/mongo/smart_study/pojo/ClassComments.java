@@ -45,6 +45,22 @@ public class ClassComments {
         this.classId = classId;
     }
 
+    public void setClassId(long classId) {
+        this.classId = classId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public Date getJoinTime() {
+        return joinTime;
+    }
+
+    public void setJoinTime(Date joinTime) {
+        this.joinTime = joinTime;
+    }
+
     public long getUserId() {
         return userId;
     }

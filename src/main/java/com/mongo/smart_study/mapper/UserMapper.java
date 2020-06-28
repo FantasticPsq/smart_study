@@ -19,7 +19,7 @@ public interface UserMapper {
     /**用户是否存在*/
     boolean isUserExists(String username);
     /**id用户查询*/
-    MyUser getUserById(int id);
+    MyUser getUserById(long id);
     /**更新nickName*/
     int updateNickNameByName(String userName,String nickName);
     /**跟新个性签名*/
@@ -30,5 +30,8 @@ public interface UserMapper {
     int updatePhoneByName(String username,String phone);
     /**更新用户的邮箱号码*/
     int updateEmailByName(String username,String email);
+    /**更新用户的课程数*/
+    int updateClassNumById(long id);
+
 
 }
