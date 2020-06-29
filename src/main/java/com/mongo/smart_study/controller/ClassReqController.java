@@ -121,7 +121,6 @@ public class ClassReqController implements ClassReqControllerInterface {
             response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         }
     }
-
     @Override
     @RequestMapping("/getSeniorClasses")
     public RespEntity getSeniorClasses() {
@@ -131,7 +130,6 @@ public class ClassReqController implements ClassReqControllerInterface {
         else
           return new RespEntity(RespCode.Success,classes);
     }
-
     @Override
     @RequestMapping("/getJuniorClasses")
     public RespEntity getJuniorClasses() {
@@ -147,8 +145,6 @@ public class ClassReqController implements ClassReqControllerInterface {
     public RespEntity getRecommendClasses() {
         return null;
     }
-
-
 
     @Override
     @RequestMapping("/doComments")
@@ -194,6 +190,29 @@ public class ClassReqController implements ClassReqControllerInterface {
                 return  new RespEntity(RespCode.NotFound);
             }
 
+        }else
+            return  new RespEntity(RespCode.NotFound);
+    }
+
+
+    /***取消课程的收藏**/
+    @Override
+    @RequestMapping("/cancelCollectedClass")
+    public RespEntity cancelCollectClass() throws IOException {
+        String username= getUserContextUtil.getCurrentUsername();
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            try
+            {
+                long classId=Integer.parseInt(jsonObject.getString("classID"));
+                classService.cancelCollectedClass(username,classId);
+                return new RespEntity(RespCode.Success);
+            }catch (NumberFormatException ex)
+            {
+                return  new RespEntity(RespCode.NotFound);
+            }
         }else
             return  new RespEntity(RespCode.NotFound);
     }

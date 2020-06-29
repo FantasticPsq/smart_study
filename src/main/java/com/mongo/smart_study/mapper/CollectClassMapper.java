@@ -15,4 +15,6 @@ public interface CollectClassMapper {
     List<UserCollectedClass> getUserCollectedClassById(long id);
     /***查看指定用户对指定课程的收藏*/
     UserCollectedClass check(UserCollectedClass userCollectedClass);
+    /**取消一个收藏课程*/
+    int deleteCollectClass(UserCollectedClass collectedClass);
 }

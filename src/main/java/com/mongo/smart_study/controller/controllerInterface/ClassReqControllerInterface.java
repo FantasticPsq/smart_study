@@ -30,6 +30,8 @@ public interface ClassReqControllerInterface {
 
     /**收藏课程接口*/
     RespEntity collectClass() throws IOException;
+    /***取消课程的收藏*/
+    RespEntity cancelCollectClass() throws IOException;
 
 
 }

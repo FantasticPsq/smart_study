@@ -12,4 +12,7 @@
     <select id="check" parameterType="UserCollectedClass" resultType="UserCollectedClass">
         select * from collect_class where user_id=#{userId} and class_id=#{classId}
     </select>
+    <delete id="deleteCollectClass" parameterType="UserCollectedClass">
+        delete from collect_class where user_id=#{userId} and class_id=#{classId}
+    </delete>
 </mapper>

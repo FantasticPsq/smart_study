@@ -32,6 +32,7 @@ public interface UserMapper {
     int updateEmailByName(String username,String email);
     /**更新用户的课程数*/
     int updateClassNumById(long id);
-
+    /**用户取消了课程*/
+    int deleteClassNumById(long id);
 
 }

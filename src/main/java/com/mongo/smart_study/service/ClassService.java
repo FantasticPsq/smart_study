@@ -103,7 +103,6 @@ public class ClassService {
         {
             return;
         }else {
-
             UserCollectedClass collectedClass=new UserCollectedClass(classId,myUser.getId(),username);
             if (collectClassRepo.check(collectedClass)==null)
             {
@@ -113,4 +112,25 @@ public class ClassService {
             }
         }
     }
+    /***取消课程的收藏*/
+    public void cancelCollectedClass(String username,long classId)
+    {
+        MyUser myUser=userRepo.findUserByName(username);
+        if (myUser==null)
+        {
+            return;
+        }else {
+            UserCollectedClass collectedClass=new UserCollectedClass(classId,myUser.getId(),username);
+            if (collectClassRepo.check(collectedClass)!=null)
+            {
+                collectClassRepo.deleteCollectClass(collectedClass);
+                //并且需要同时跟新用户的课程数(收藏的课程的数量)
+                userRepo.deleteClassNumById(myUser.getId());
+            }
+        }
+
+    }
+
+
+
 }

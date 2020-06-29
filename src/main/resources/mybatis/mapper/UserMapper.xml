@@ -46,5 +46,8 @@
     <update id="updateClassNumById">
         update user_info set class_num=class_num+1 where id=#{id}
     </update>
+    <update id="deleteClassNumById">
+        update user_info set class_num=class_num-1 where id=#{id}
+    </update>
 
 </mapper>
