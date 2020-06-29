@@ -1,4 +1,6 @@
-package com.mongo.smart_study.pojo;
+package com.mongo.smart_study.pojo.RespClass;
+
+import com.mongo.smart_study.pojo.ClassComments;
 
 public class CommentsResp {
         private String nickName;
