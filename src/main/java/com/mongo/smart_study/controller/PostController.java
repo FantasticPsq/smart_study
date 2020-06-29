@@ -3,6 +3,9 @@ package com.mongo.smart_study.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mongo.smart_study.controller.controllerInterface.PostReqControllerInterface;
+import com.mongo.smart_study.pojo.Post;
+import com.mongo.smart_study.pojo.PostComments;
+import com.mongo.smart_study.pojo.RespClass.PostCommentResp;
 import com.mongo.smart_study.pojo.RespClass.PostResp;
 import com.mongo.smart_study.service.PostService;
 import com.mongo.smart_study.utils.FileUtils;
@@ -41,8 +44,6 @@ public class PostController implements PostReqControllerInterface {
     private GetUserContextUtil getUserContextUtil;
     @Resource
     private HttpServletRequest httpServletRequest;
-
-
 
     private final ResourceLoader resourceLoader;
     @Autowired
@@ -107,4 +108,58 @@ public class PostController implements PostReqControllerInterface {
         return new RespEntity(RespCode.Success,postRespList);
     }
 
+    @Override
+    @RequestMapping("/getAllPostComments")
+    public RespEntity getAllPostComments() throws IOException {
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        try{
+            if (StringUtils.hasText(body))
+            {
+                JSONObject jsonObject=JSON.parseObject(body);
+                long postId=Long.parseLong(jsonObject.getString("postId"));
+                List<PostCommentResp> postCommentRespList=postService.getAllPostComments(postId);
+                return new RespEntity(RespCode.Success,postCommentRespList);
+            }else {
+                return new RespEntity(RespCode.NotFound);
+            }
+        }catch (NumberFormatException e)
+        {
+            return new RespEntity(RespCode.NotFound);
+        }
+    }
+    @Override
+    @RequestMapping("/doPostComment")
+    public RespEntity doPostComment() throws IOException {
+        //需要获取username，postid，content
+        String username=getUserContextUtil.getCurrentUsername();
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body)) {
+            JSONObject jsonObject=JSON.parseObject(body);
+            long postId=Long.parseLong(jsonObject.getString("postId"));
+            postService.doPostComments(username,postId,jsonObject.getString("content"));
+            return new RespEntity(RespCode.Success);
+        }else {
+            return new RespEntity(RespCode.NotFound);
+        }
+    }
+    @Override
+    @RequestMapping("/getPostById")
+    public RespEntity getPostById() throws IOException {
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            try {
+                JSONObject jsonObject= JSON.parseObject(body);
+                long postId=Long.parseLong(jsonObject.getString("postId"));
+                PostResp postResp=postService.getPostById(postId);
+                return new RespEntity(RespCode.Success,postResp);
+            }catch (NumberFormatException ex)
+            {
+                return new RespEntity(RespCode.NotFound);
+            }
+        }else
+        {
+            return new RespEntity(RespCode.NotFound);
+        }
+    }
 }

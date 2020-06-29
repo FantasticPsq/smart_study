@@ -6,11 +6,14 @@ import com.mongo.smart_study.mapper.PostMapper;
 import com.mongo.smart_study.mapper.UserMapper;
 import com.mongo.smart_study.pojo.MyUser;
 import com.mongo.smart_study.pojo.Post;
+import com.mongo.smart_study.pojo.PostComments;
 import com.mongo.smart_study.pojo.PostImages;
+import com.mongo.smart_study.pojo.RespClass.PostCommentResp;
 import com.mongo.smart_study.pojo.RespClass.PostResp;
 import com.mongo.smart_study.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -67,5 +70,38 @@ public class PostService {
         postRepo.addPost(post);
         return post.getId();
         //返回post的id
+    }
+
+    /***返回post的所有的评论**/
+    public List<PostCommentResp> getAllPostComments(long postId)
+    {
+        MyUser myUser=null;
+        List<PostComments> postCommentsList=postCommentsRepo.findAllPostCommentsById(postId);
+        List<PostCommentResp> postCommentRespList=new ArrayList<>();
+        for (int i = 0; i <postCommentsList.size() ; i++) {
+            myUser=userRepo.getUserById(postCommentsList.get(i).getUserId());
+            postCommentRespList.add(new PostCommentResp(myUser.getNickname(),postCommentsList.get(i)));
+        }
+        return postCommentRespList;
+    }
+    /***做评论*/
+    public void doPostComments(String username,long postId,String content)
+    {
+        MyUser myUser=userRepo.findUserByName(username);
+        if (myUser==null)
+            return;
+        PostComments postComments=new PostComments(postId,myUser.getId(),content);
+        postCommentsRepo.addPostComment(postComments);
+    }
+
+
+    /**通过id返回对应的post*/
+    public  PostResp getPostById(long postId)
+    {
+        Post post=postRepo.findPostById(postId);
+        MyUser myUser=userRepo.getUserById(post.getMasterId());
+        List<PostImages> postImages=postImageRepo.getAllImagesById(postId);
+        PostResp postResp=new PostResp(myUser.getNickname(),myUser.getSchool(),post,postImages);
+        return postResp;
     }
 }
