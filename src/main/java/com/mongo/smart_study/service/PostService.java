@@ -31,7 +31,6 @@ public class PostService {
 
     public List<PostResp> getAllPost()
     {
-        try {
             List<Post> posts=postRepo.findAllPost();
             MyUser user=null;
             List<PostImages> postImages=null;
@@ -39,15 +38,10 @@ public class PostService {
             for (int i = 0; i < posts.size(); i++) {
                 user=userRepo.getUserById(posts.get(i).getMasterId());
                 postImages=postImageRepo.getAllImagesById(posts.get(i).getId());
-                postRespList.add(new PostResp(user.getNickname(),posts.get(i),postImages));
+                postRespList.add(new PostResp(user.getNickname(),user.getSchool(),posts.get(i),postImages));
             }
             return postRespList;
-        }catch (Exception e)
-        {
-            return null;
-        }
     }
-
     public String getPostImageSrc(long imageID)
     {
         PostImages postImage=postImageRepo.getImageById(imageID);

@@ -6,7 +6,7 @@
     <insert id="addPostImage" parameterType="PostImages">
         insert into post_images (post_id, image_src, join_time) VALUES (#{postId},#{imageSrc},#{joinTime})
    </insert>
-    <select id="getAllImagesById">
+    <select id="getAllImagesById" resultType="PostImages">
         select *from post_images where post_id=#{id}
     </select>
     <select id="getImageById" resultType="PostImages">
