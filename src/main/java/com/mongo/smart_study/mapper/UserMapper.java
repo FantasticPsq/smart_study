@@ -34,5 +34,9 @@ public interface UserMapper {
     int updateClassNumById(long id);
     /**用户取消了课程*/
     int deleteClassNumById(long id);
+    /***用户的头像**/
+    int updateUserImageByName(String username,String path);
+    /*****获取用户头像地址**/
+    int getUserImageSrcById(long id);
 
 }

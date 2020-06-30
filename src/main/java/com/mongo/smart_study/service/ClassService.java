@@ -128,9 +128,16 @@ public class ClassService {
                 userRepo.deleteClassNumById(myUser.getId());
             }
         }
-
     }
-
-
-
+    public int addClass(String username,String name ,String classType,String description)
+    {
+        MyUser myUser=userRepo.findUserByName(username);
+        Class myClass=new Class(name,classType,myUser.getUsername(),description);
+        classRepo.addClass(myClass);
+        return myClass.getId();
+    }
+    public void saveVideo(long classId,String videoPath)
+    {
+        classRepo.updateVideoSrcById(classId,videoPath);
+    }
 }

@@ -67,6 +67,14 @@ public class Class {
         this.joinTime=new Date();
     }
 
+    public Class(String name, String classType, String origin, String description) {
+        this.name = name;
+        this.classType = classType;
+        this.origin = origin;
+        this.description = description;
+        this.joinTime = new Date();
+    }
+
     public int getId() {
         return id;
     }

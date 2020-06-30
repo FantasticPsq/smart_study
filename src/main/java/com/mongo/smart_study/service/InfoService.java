@@ -74,4 +74,17 @@ public class InfoService {
         }
 
     }
+
+    public void saveUserImage(String path,String username)
+    {
+        userRepository.updateUserImageByName(username,path);
+    }
+    public String getUserImageSrc(long userId)
+    {
+        MyUser myUser=userRepository.getUserById(userId);
+        if (myUser==null)
+            return null;
+        else
+            return myUser.getImageUrl();
+    }
 }

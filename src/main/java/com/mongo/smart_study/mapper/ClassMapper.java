@@ -22,5 +22,8 @@ public interface ClassMapper {
     /**根据课程得id跟新课程对应得评论数*/
     int updateCommentNumById(long id);
     int updateLikeNumById(long id);
+    /**根据id更新vdeoPost*/
+    int updateVideoSrcById(long id,String path);
+
 
 }

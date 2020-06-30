@@ -8,17 +8,18 @@ import com.mongo.smart_study.pojo.MyUser;
 import com.mongo.smart_study.pojo.UserCollectedClass;
 import com.mongo.smart_study.service.UserService;
 import com.mongo.smart_study.service.InfoService;
-import com.mongo.smart_study.utils.RequestJsonUtil;
-import com.mongo.smart_study.utils.RespCode;
-import com.mongo.smart_study.utils.RespEntity;
+import com.mongo.smart_study.utils.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.mongo.smart_study.utils.GetUserContextUtil;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -39,6 +40,9 @@ public class UserInfoController implements UserInfoControllerInterface {
 
     @Resource
     private GetUserContextUtil getUserContextUtil;
+    @Value("${userImagePath}")
+    private String path;
+
 
     @Override
     @PostMapping("/login")
@@ -172,4 +176,34 @@ public class UserInfoController implements UserInfoControllerInterface {
         List<Class> collectedClassList=infoService.getAllUserCollectedClasses(username);
         return new RespEntity(RespCode.Success,collectedClassList);
     }
+
+
+    @RequestMapping("/imageFileUpload")
+    public RespEntity upload(@RequestParam("filename") MultipartFile file, Map<String, Object> map){
+        //这里是需要拿到postId
+            String username=getUserContextUtil.getCurrentUsername();
+            String realPath= FileUtils.upload(file, path, file.getOriginalFilename());
+            if (realPath!=null){
+                // 上传成功，给出页面提示
+                infoService.saveUserImage(realPath,username);
+                return new RespEntity(RespCode.Success);
+            }else {
+                return new RespEntity(RespCode.NotFound);
+            }
+    }
+
+    @RequestMapping(value = "/getUserImage/{ImageID}",produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getImage(@PathVariable("ImageID") long ImageID) throws IOException {
+        FileInputStream inputStream=new FileInputStream(new File(infoService.getUserImageSrc(ImageID)));
+        byte[] bytes = new byte[inputStream.available()];
+        inputStream.read(bytes, 0, inputStream.available());
+        return bytes;
+    }
+
+
+
+
+
+
+
 }

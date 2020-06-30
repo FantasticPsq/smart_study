@@ -6,17 +6,14 @@ import com.mongo.smart_study.controller.controllerInterface.ClassReqControllerIn
 import com.mongo.smart_study.pojo.Class;
 import com.mongo.smart_study.pojo.RespClass.CommentsResp;
 import com.mongo.smart_study.service.ClassService;
-import com.mongo.smart_study.utils.GetUserContextUtil;
-import com.mongo.smart_study.utils.NonStaticResourceHttpRequestHandler;
-import com.mongo.smart_study.utils.RespCode;
-import com.mongo.smart_study.utils.RespEntity;
+import com.mongo.smart_study.utils.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +24,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RequestMapping("/class")
@@ -42,6 +41,8 @@ public class ClassReqController implements ClassReqControllerInterface {
     private HttpServletRequest httpServletRequest;
     @Resource
     private GetUserContextUtil getUserContextUtil;
+    @Value("${uploadVideoPath}")
+    private String path;
 
     @Override
     @RequestMapping("/getClassInfo")
@@ -219,5 +220,43 @@ public class ClassReqController implements ClassReqControllerInterface {
         byte[] bytes = new byte[inputStream.available()];
         inputStream.read(bytes, 0, inputStream.available());
         return bytes;
+    }
+
+    @RequestMapping("/addClass")
+    public RespEntity addClass() throws IOException {
+        //用户上传一个课程
+        String username=getUserContextUtil.getCurrentUsername();
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            long id=classService.addClass(username,jsonObject.getString("name"),jsonObject.getString("classType"),jsonObject.getString("description"));
+            HashMap<String,Long> map=new HashMap<>();
+            map.put("classId",id);
+            return  new RespEntity(RespCode.Success,map);
+        }else
+        {
+            return new RespEntity(RespCode.NotFound);
+        }
+    }
+
+    /**用户上传课程*/
+    @RequestMapping("/fileUpload")
+    public RespEntity upload(@RequestParam("filename") MultipartFile file){
+        //这里是需要拿到postId的
+        try{
+            long classId=Long.parseLong(httpServletRequest.getParameter("classId"));
+            String realPath= FileUtils.upload(file, path, file.getOriginalFilename());
+            if (realPath!=null&&classId>0){
+                // 上传成功，给出页面提示
+                classService.saveVideo(classId,realPath);
+                return new RespEntity(RespCode.Success);
+            }else {
+                return new RespEntity(RespCode.NotFound);
+            }
+        }catch (NumberFormatException e)
+        {
+            return new RespEntity(RespCode.NotFound);
+        }
     }
 }

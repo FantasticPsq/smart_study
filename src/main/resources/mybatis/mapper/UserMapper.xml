@@ -49,5 +49,8 @@
     <update id="deleteClassNumById">
         update user_info set class_num=class_num-1 where id=#{id}
     </update>
+    <update id="updateUserImageByName">
+        update user_info set imageUrl=#{param2} where username=#{param1}
+    </update>
 
 </mapper>
