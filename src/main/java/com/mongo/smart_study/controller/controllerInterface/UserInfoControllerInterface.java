@@ -19,5 +19,7 @@ public interface UserInfoControllerInterface {
     RespEntity getUserAllInfo();
     RespEntity getUserCollectedClasses();
 
+    RespEntity userCheckIn();
+
 
 }

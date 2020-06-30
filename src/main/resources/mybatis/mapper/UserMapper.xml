@@ -17,7 +17,7 @@
     </select>
 
     <insert id="addUser" parameterType="MyUser">
-        insert into user_info (username,password,email,phone_number,join_time,roles) values (#{username},#{password},#{email},#{phoneNumber},#{joinTime},#{roles})
+        insert into user_info (username, password, email, join_time, roles, signature, study_time, balance, integral, school, role_id, union_id, nick_name, class_num, imageUrl) values (#{username},#{password},#{email},#{joinTime},#{roles},#{signature}, #{studyTime}, #{balance}, #{integral}, #{school}, #{roleId}, #{unionId}, #{nickname}, #{classNum}, #{imageUrl})
     </insert>
 
     <delete id="deleteUserById" parameterType="int">
@@ -51,6 +51,9 @@
     </update>
     <update id="updateUserImageByName">
         update user_info set imageUrl=#{param2} where username=#{param1}
+    </update>
+    <update id="updateIntegralByUserName">
+        update user_info set integral=integral+1 where username=#{username}
     </update>
 
 </mapper>

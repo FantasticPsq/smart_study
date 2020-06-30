@@ -176,11 +176,16 @@ public class UserInfoController implements UserInfoControllerInterface {
         List<Class> collectedClassList=infoService.getAllUserCollectedClasses(username);
         return new RespEntity(RespCode.Success,collectedClassList);
     }
-
+    @Override
+    @RequestMapping("/userCheckIn")
+    public RespEntity userCheckIn() {
+        String username=getUserContextUtil.getCurrentUsername();
+        infoService.checkIn(username);
+        return null;
+    }
 
     @RequestMapping("/imageFileUpload")
     public RespEntity upload(@RequestParam("filename") MultipartFile file, Map<String, Object> map){
-        //这里是需要拿到postId
             String username=getUserContextUtil.getCurrentUsername();
             String realPath= FileUtils.upload(file, path, file.getOriginalFilename());
             if (realPath!=null){

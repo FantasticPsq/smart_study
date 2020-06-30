@@ -38,5 +38,7 @@ public interface UserMapper {
     int updateUserImageByName(String username,String path);
     /*****获取用户头像地址**/
     int getUserImageSrcById(long id);
+    /****签到积分*/
+    int updateIntegralByUserName(String username);
 
 }

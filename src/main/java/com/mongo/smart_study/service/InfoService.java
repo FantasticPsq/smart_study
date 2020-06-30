@@ -87,4 +87,8 @@ public class InfoService {
         else
             return myUser.getImageUrl();
     }
+    public void checkIn(String username)
+    {
+        userRepository.updateIntegralByUserName(username);
+    }
 }

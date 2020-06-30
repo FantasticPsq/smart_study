@@ -48,7 +48,7 @@ public class MyUser {
     @Column(name = "role_id",type = MySqlTypeConstant.INT)
     private int roleId;
     @Column(name = "union_id",type = MySqlTypeConstant.VARCHAR,length = 50)
-    private String union_id;
+    private String unionId;
     public MyUser(){
     }
     public MyUser(String username, String password, String roles) {
@@ -56,6 +56,10 @@ public class MyUser {
         this.password = password;
         this.joinTime = new Date();
         this.roles = roles;
+        this.balance=0;
+        this.classNum=0;
+        this.integral=0;
+        this.studyTime=0;
     }
 
     public MyUser(String username, String password, String phoneNumber, String email, String roles) {
@@ -192,12 +196,12 @@ public class MyUser {
         this.roleId = roleId;
     }
 
-    public String getUnion_id() {
-        return union_id;
+    public String getUnionId() {
+        return unionId;
     }
 
-    public void setUnion_id(String union_id) {
-        this.union_id = union_id;
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
     }
 
 }
