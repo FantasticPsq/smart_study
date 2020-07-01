@@ -12,6 +12,7 @@ import com.mongo.smart_study.pojo.RespClass.PostCommentResp;
 import com.mongo.smart_study.pojo.RespClass.PostResp;
 import com.mongo.smart_study.utils.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +31,8 @@ public class PostService {
     private PostCommentsMapper postCommentsRepo;
     @Autowired
     private UserMapper userRepo;
+    @Value("${fileNotFoundPath}")
+    private String fileNotFoundPath;
 
 
     public List<PostResp> getAllPost()
@@ -49,7 +52,7 @@ public class PostService {
     {
         PostImages postImage=postImageRepo.getImageById(imageID);
         if (postImage==null)
-            return "";
+            return fileNotFoundPath;
         else
             return postImage.getImageSrc();
     }

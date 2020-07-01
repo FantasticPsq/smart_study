@@ -29,6 +29,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -79,10 +80,16 @@ public class PostController implements PostReqControllerInterface {
     }
     @RequestMapping(value = "/getPostImage/{ImageID}",produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] getImage(@PathVariable("ImageID") long ImageID) throws IOException {
-        FileInputStream inputStream=new FileInputStream(new File(postService.getPostImageSrc(ImageID)));
-        byte[] bytes = new byte[inputStream.available()];
-        inputStream.read(bytes, 0, inputStream.available());
-        return bytes;
+        try{
+            FileInputStream inputStream=new FileInputStream(new File(postService.getPostImageSrc(ImageID)));
+            byte[] bytes = new byte[inputStream.available()];
+            inputStream.read(bytes, 0, inputStream.available());
+            return bytes;
+        }catch (FileNotFoundException e)
+        {
+            return null;
+        }
+
     }
     @RequestMapping("/doPost")
     public RespEntity post() throws IOException {

@@ -260,4 +260,16 @@ public class ClassReqController implements ClassReqControllerInterface {
             return new RespEntity(RespCode.NotFound);
         }
     }
+
+    @RequestMapping("/getSwiperClass")
+    public RespEntity getSwiperClass()
+    {
+        try {
+            List<Class> classes=classService.getSwiperClasses();
+            return new RespEntity(RespCode.Success,classes);
+        }catch (Exception e)
+        {
+            return new RespEntity(RespCode.NotFound);
+        }
+    }
 }

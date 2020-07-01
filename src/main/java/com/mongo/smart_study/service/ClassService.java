@@ -8,10 +8,12 @@ import com.mongo.smart_study.pojo.*;
 import com.mongo.smart_study.pojo.Class;
 import com.mongo.smart_study.pojo.RespClass.CommentsResp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ClassService {
@@ -24,7 +26,8 @@ public class ClassService {
     private UserMapper userRepo;
     @Autowired
     private CollectClassMapper collectClassRepo;
-
+    @Value("${fileNotFoundPath}")
+    private String fileNotFoundPath;
 
     /****提供视频文件映射的服务***/
     public String findVideoSrcById(int id)
@@ -90,7 +93,7 @@ public class ClassService {
         String postSrc=classRepo.getClassPostSrcById(classID);
         if (postSrc==null)
         {
-            return "";
+            return fileNotFoundPath;
         }else
             return postSrc;
     }
@@ -139,5 +142,16 @@ public class ClassService {
     public void saveVideo(long classId,String videoPath)
     {
         classRepo.updateVideoSrcById(classId,videoPath);
+    }
+    public List<Class> getSwiperClasses()
+    {
+        //返回三个课程能够放在海报上的课程
+        List<Class> classList=classRepo.getClasses();
+        List<Class> classListReturn=new ArrayList<>();
+        Random random=new Random();
+        for (int i = 0; i < 3; i++) {
+            classListReturn.add(classList.get(random.nextInt(classList.size())));
+        }
+        return classListReturn;
     }
 }
