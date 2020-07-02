@@ -32,5 +32,8 @@
     <update id="updateVideoSrcById">
         update class set video_url=#{param2} where id=#{param1}
     </update>
+    <select id="searchClass" resultType="Class">
+        select *from class where name like '%${className}%'
+    </select>
 
 </mapper>

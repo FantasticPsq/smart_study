@@ -154,4 +154,10 @@ public class ClassService {
         }
         return classListReturn;
     }
+
+    public List<Class> searchClass(String className)
+    {
+        List<Class> classList=classRepo.searchClass(className);
+        return classList;
+    }
 }

@@ -49,7 +49,7 @@ public class UserInfoController implements UserInfoControllerInterface {
     public RespEntity login() throws IOException {
 
         Map<String, String> hashMap = RequestJsonUtil.getRequestJson(httpServletRequest);
-        String token = userService.signin(hashMap.get("username"), hashMap.get("password"),hashMap.get("roles"));
+        String token = userService.signin(hashMap.get("username"), hashMap.get("password"),hashMap.get("roles"),hashMap.get("nickName"));
         HashMap<String, String> hashMap1 = new HashMap<>();
         hashMap1.put("token", token);
         return new RespEntity(RespCode.Success, hashMap1);
@@ -65,7 +65,8 @@ public class UserInfoController implements UserInfoControllerInterface {
             String username = jsonObj.getString("username");
             String password = jsonObj.getString("password");
             String roles = jsonObj.getString("roles");
-            MyUser newUser = new MyUser(username, password, roles);
+            String nickName=jsonObj.getString("nickName");
+            MyUser newUser = new MyUser(username, password, roles,nickName);
             userService.signup(newUser);
             return new RespEntity(RespCode.Success);
         } else {
@@ -197,18 +198,18 @@ public class UserInfoController implements UserInfoControllerInterface {
             }
     }
 
-    @RequestMapping(value = "/getUserImage/{ImageID}",produces = MediaType.IMAGE_JPEG_VALUE)
-    public byte[] getImage(@PathVariable("ImageID") long ImageID) throws IOException {
-        FileInputStream inputStream=new FileInputStream(new File(infoService.getUserImageSrc(ImageID)));
-        byte[] bytes = new byte[inputStream.available()];
-        inputStream.read(bytes, 0, inputStream.available());
-        return bytes;
+    @RequestMapping(value = "/getUserImage/{ImageID}/{random}",produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] getImage(@PathVariable("ImageID") long ImageID, @PathVariable("random") long random) throws IOException {
+        try {
+            FileInputStream inputStream=new FileInputStream(new File(infoService.getUserImageSrc(ImageID)));
+            byte[] bytes = new byte[inputStream.available()];
+            inputStream.read(bytes, 0, inputStream.available());
+            return bytes;
+        }catch (NullPointerException e)
+        {
+            return null;
+        }
     }
-
-
-
-
-
 
 
 }

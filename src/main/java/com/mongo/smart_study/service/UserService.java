@@ -33,11 +33,11 @@ public class UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public String signin(String username, String password,String roles) {
+    public String signin(String username, String password,String roles,String nickName) {
         if (userRepository.findUserByName(username)==null)
         {
             //说明从来没有进行过登录，第一次登录需要注册，并且登录
-            MyUser newUser=new MyUser(username,password,roles);
+            MyUser newUser=new MyUser(username,password,roles,nickName);
             newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
             userRepository.addUser(newUser);
         }

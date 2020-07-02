@@ -51,11 +51,12 @@ public class MyUser {
     private String unionId;
     public MyUser(){
     }
-    public MyUser(String username, String password, String roles) {
+    public MyUser(String username, String password, String roles,String nickname) {
         this.username = username;
         this.password = password;
         this.joinTime = new Date();
         this.roles = roles;
+        this.nickname=nickname;
         this.balance=0;
         this.classNum=0;
         this.integral=0;

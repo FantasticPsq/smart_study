@@ -12,15 +12,15 @@ import java.sql.SQLOutput;
 
 @SpringBootTest
 class SmartStudyApplicationTests {
-    @Autowired
-    DataSource dataSource;
-    @Autowired(required = false)
-
-    @Test
-    void contextLoads() throws SQLException {
-        System.out.println(dataSource.getClass());
-        System.out.println(dataSource.getConnection());
-
-    }
+//    @Autowired
+//    DataSource dataSource;
+//    @Autowired(required = false)
+//
+//    @Test
+//    void contextLoads() throws SQLException {
+//        System.out.println(dataSource.getClass());
+//        System.out.println(dataSource.getConnection());
+//
+//    }
 
 }

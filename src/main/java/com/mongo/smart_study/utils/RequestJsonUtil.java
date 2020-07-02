@@ -39,12 +39,13 @@ public class RequestJsonUtil {
 
     public static Map<String, String> getRequestJson(HttpServletRequest httpServletRequest) throws IOException {
         String body = StreamUtils.copyToString(httpServletRequest.getInputStream(), StandardCharsets.UTF_8);
-        String username = null, password = null, wxUserCode = null,roles=null;
+        String username = null, password = null, wxUserCode = null,roles=null,nickName=null;
         if (StringUtils.hasText(body)) {
             JSONObject jsonObj = JSON.parseObject(body);
             wxUserCode = jsonObj.getString("code");
             username = jsonObj.getString("username");
             roles=jsonObj.getString("roles");
+            nickName=jsonObj.getString("nickName");
             if (wxUserCode != null) {
                 JSONObject codeJson = RequestJsonUtil.requestForWX(wxAppID,wxAPPSecret,wxUserCode);
                 username=codeJson.getString("openid");
@@ -68,6 +69,7 @@ public class RequestJsonUtil {
         map.put("username", username);
         map.put("password", password);
         map.put("roles",roles);
+        map.put("nickName",nickName);
         return map;
     }
 

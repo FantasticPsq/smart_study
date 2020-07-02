@@ -272,4 +272,15 @@ public class ClassReqController implements ClassReqControllerInterface {
             return new RespEntity(RespCode.NotFound);
         }
     }
+    @RequestMapping("/searchClass")
+    private RespEntity searchClass() throws IOException {
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            List<Class> classList=classService.searchClass(jsonObject.getString("className"));
+            return new RespEntity(RespCode.Success,classList);
+        }
+        return new RespEntity(RespCode.NotFound);
+    }
 }
