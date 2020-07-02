@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/post/getAllPostComments").permitAll()
                 .antMatchers("/post/getPostById").permitAll()
                 .antMatchers("/user//getUserImage/**/*").permitAll()
+                .antMatchers("/class/getRecommendClasses").permitAll()
                 // Disallow everything else..
                 .anyRequest().authenticated();
 

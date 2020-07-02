@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class ClassService {
@@ -164,5 +162,22 @@ public class ClassService {
     {
         classRepo.updateLikeNumById(classId);
         return classRepo.getLikesNum(classId);
+    }
+    public List<Class> getRecommendClasses()
+    {
+
+        List<Class> classList=classRepo.getClasses();
+        List<Class> classListRes=new ArrayList<>();
+        Collections.sort(classList, new Comparator<Class>() {
+            @Override
+            public int compare(Class o1, Class o2) {
+                int res=(int)(o2.getLikeNum()-o1.getLikeNum());
+                return res;
+            }
+        });
+        for (int i = 0; i < 8; i++) {
+            classListRes.add(classList.get(i));
+        }
+        return classListRes;
     }
 }

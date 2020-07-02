@@ -3,9 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mongo.smart_study.mapper.ClassMapper">
-    <select id="getClasses" resultType="Class" >
-        select * from class
-    </select>
     <select id="getClassById" resultType="Class">
         select * from class where id=#{id}
     </select>
@@ -15,7 +12,9 @@
     <select id="findVideoSrcById" resultType="String">
         select video_url from class where id=#{id}
     </select>
-
+    <select id="getClasses" resultType="Class" >
+        select * from class
+    </select>
     <select id="findAllClassesByType" resultType="Class">
         select * from class where class_type=#{type}
     </select>
@@ -27,7 +26,7 @@
     </update>
 
     <update id="updateLikeNumById">
-        update class set likes=likes+1 where id=#{id}
+        update class set like_num=like_num+1 where id=#{id}
     </update>
     <update id="updateVideoSrcById">
         update class set video_url=#{param2} where id=#{param1}
@@ -35,8 +34,8 @@
     <select id="searchClass" resultType="Class">
         select *from class where name like '%${className}%'
     </select>
-    <select id="getLikesNum">
-      select likes from class where id=#{classId}
+    <select id="getLikesNum" resultType="Integer">
+      select like_num from class where id=#{classId}
     </select>
 
 </mapper>

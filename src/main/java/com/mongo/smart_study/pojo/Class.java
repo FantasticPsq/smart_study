@@ -25,14 +25,14 @@ public class Class {
     private String videoUrl;
     @Column(name = "post_url",type = MySqlTypeConstant.VARCHAR,length = 250)
     private String postUrl;
-    @Column(name = "likes",type = MySqlTypeConstant.BIGINT)
-    private int likesNum;
     @Column(name = "comments_num",type = MySqlTypeConstant.BIGINT)
     private int commentsNum;
     @Column(name = "watch_num",type = MySqlTypeConstant.BIGINT)
     private int watchNum;
     @Column(name = "join_time", type = MySqlTypeConstant.DATETIME)
     private Date joinTime;
+    @Column(name = "like_num",type = MySqlTypeConstant.BIGINT)
+    private Integer likeNum;
 
     public Date getJoinTime() {
         return joinTime;
@@ -131,16 +131,16 @@ public class Class {
         this.postUrl = postUrl;
     }
 
-    public int getLikesNum() {
-        return likesNum;
-    }
-
-    public void setLikesNum(int likesNum) {
-        this.likesNum = likesNum;
-    }
-
     public int getCommentsNum() {
         return commentsNum;
+    }
+
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
     }
 
     public void setCommentsNum(int commentsNum) {

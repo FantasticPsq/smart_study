@@ -140,7 +140,13 @@ public class ClassReqController implements ClassReqControllerInterface {
     @Override
     @RequestMapping("/getRecommendClasses")
     public RespEntity getRecommendClasses() {
-        return null;
+        try{
+            List<Class> classList=classService.getRecommendClasses();
+            return new RespEntity(RespCode.Success,classList);
+        }catch (Exception e)
+        {
+         return    new RespEntity(RespCode.NotFound);
+        }
     }
 
     @Override
