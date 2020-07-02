@@ -35,5 +35,8 @@
     <select id="searchClass" resultType="Class">
         select *from class where name like '%${className}%'
     </select>
+    <select id="getLikesNum">
+      select likes from class where id=#{classId}
+    </select>
 
 </mapper>

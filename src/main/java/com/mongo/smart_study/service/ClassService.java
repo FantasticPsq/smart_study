@@ -160,4 +160,9 @@ public class ClassService {
         List<Class> classList=classRepo.searchClass(className);
         return classList;
     }
+    public int likes(long classId)
+    {
+        classRepo.updateLikeNumById(classId);
+        return classRepo.getLikesNum(classId);
+    }
 }

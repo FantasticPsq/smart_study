@@ -283,4 +283,23 @@ public class ClassReqController implements ClassReqControllerInterface {
         }
         return new RespEntity(RespCode.NotFound);
     }
+
+    @RequestMapping("/like")
+    public RespEntity likes() throws IOException {
+        String body=StreamUtils.copyToString(httpServletRequest.getInputStream(),StandardCharsets.UTF_8);
+        if (StringUtils.hasText(body))
+        {
+            JSONObject jsonObject=JSON.parseObject(body);
+            long classId=Long.parseLong(jsonObject.getString("classId"));
+             int likes=classService.likes(classId);
+             HashMap<String,Integer> map=new HashMap();
+             map.put("likesNum",likes);
+             return new RespEntity(RespCode.Success,map);
+        }
+        else
+            return new RespEntity(RespCode.NotFound);
+    }
+
+
+
 }

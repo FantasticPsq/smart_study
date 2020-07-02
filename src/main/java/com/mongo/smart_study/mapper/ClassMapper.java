@@ -26,6 +26,8 @@ public interface ClassMapper {
     int updateVideoSrcById(long id,String path);
     /***查询课程**/
     List<Class> searchClass(String className);
+    /****点赞**/
+    int getLikesNum(long classId);
 
 
 }
