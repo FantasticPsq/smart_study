@@ -42,6 +42,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/login").permitAll()//
                 .antMatchers("/user/register").permitAll()//
                 .antMatchers("/user/user_list").permitAll()
+                .antMatchers("/class/getPlayResource/*").permitAll()
+                .antMatchers("/class/**/*").permitAll()
+                .antMatchers("/class/fileUpload").permitAll()
+                .antMatchers("/post/getAllPost").permitAll()
+                .antMatchers("/post/fileUpload").permitAll()
+                .antMatchers("/post/getPostImage/*").permitAll()
+                .antMatchers("/post/getAllPostComments").permitAll()
+                .antMatchers("/post/getPostById").permitAll()
+                .antMatchers("/user//getUserImage/**/*").permitAll()
+                .antMatchers("/class/getRecommendClasses").permitAll()
                 // Disallow everything else..
                 .anyRequest().authenticated();
 

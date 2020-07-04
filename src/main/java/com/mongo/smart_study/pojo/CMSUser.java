@@ -5,6 +5,7 @@ import com.gitee.sunchenbin.mybatis.actable.annotation.Table;
 import com.gitee.sunchenbin.mybatis.actable.command.BaseModel;
 import com.gitee.sunchenbin.mybatis.actable.constants.MySqlTypeConstant;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mongo.smart_study.mapper.UserMapper">
+
+    <select id="getUsers" resultType="MyUser">
+        select * from user_info
+    </select>
+
+    <select id="getUserById" resultType="MyUser">
+        select * from user_info where id = #{id}
+    </select>
+
+    <select id="findUserByName" resultType="MyUser">
+        select * from user_info where username = #{username}
+    </select>
+
+    <insert id="addUser" parameterType="MyUser">
+        insert into user_info (username, password, email, join_time, roles, signature, study_time, balance, integral, school, role_id, union_id, nick_name, class_num, imageUrl) values (#{username},#{password},#{email},#{joinTime},#{roles},#{signature}, #{studyTime}, #{balance}, #{integral}, #{school}, #{roleId}, #{unionId}, #{nickname}, #{classNum}, #{imageUrl})
+    </insert>
+
+    <delete id="deleteUserById" parameterType="int">
+        delete from user_info where id = #{id}
+    </delete>
+
+    <delete id="deleteUser" parameterType="MyUser">
+        delete from user_info where id=#{id}
+    </delete>
+    <update id="updateNickNameByName">
+         update user_info set nick_name=#{param2} where username=#{param1}
+    </update>
+    <update id="updateSignatureByName">
+        update user_info set signature=#{param2} where username=#{param1}
+    </update>
+    <update id="updateSchoolByName">
+        update user_info set school=#{param2} where username=#{param1}
+    </update>
+    <update id="updatePhoneByName" >
+        update user_info set phone_number=#{param2} where username=#{param1}
+    </update>
+
+    <update id="updateEmailByName" >
+        update user_info set email=#{param2} where username=#{param1}
+    </update>
+    <update id="updateClassNumById">
+        update user_info set class_num=class_num+1 where id=#{id}
+    </update>
+    <update id="deleteClassNumById">
+        update user_info set class_num=class_num-1 where id=#{id}
+    </update>
+    <update id="updateUserImageByName">
+        update user_info set imageUrl=#{param2} where username=#{param1}
+    </update>
+    <update id="updateIntegralByUserName">
+        update user_info set integral=integral+1 where username=#{username}
+    </update>
+
+</mapper>
